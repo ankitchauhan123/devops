@@ -15,17 +15,17 @@ type CurrencyRate struct {
 	Rate             float64 `json:"rate"`
 }
 
-type CurrencyService struct {
+type ExchangeRateService struct {
 	ExchangeRepo *ExchangeRepo
 }
 
-func (c *CurrencyService) HealthCheck(w http.ResponseWriter, r *http.Request) {
+func (c *ExchangeRateService) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	log.Println("entering health check end point")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "API is up and running")
 }
 
-func (c *CurrencyService) GetExchangeRate(w http.ResponseWriter, r *http.Request) {
+func (c *ExchangeRateService) GetExchangeRate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
 	from := string(vars["from"])
