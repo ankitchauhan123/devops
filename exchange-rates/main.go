@@ -14,7 +14,10 @@ import (
 
 func main() {
 	r := mux.NewRouter()
+	log.Println("Get Redis Instance")
 	redisClient := GetRedis()
+	log.Println("Got Redis Instance")
+
 	exchangeRepo := &ExchangeRepo{redisClient: redisClient}
 	currencyService := &ExchangeRateService{ExchangeRepo: exchangeRepo}
 	r.HandleFunc("/exchange-rates/health", currencyService.HealthCheck)
@@ -26,7 +29,7 @@ func main() {
 	flag.Parse()
 
 	srv := &http.Server{
-		Addr:         "0.0.0.0:8080",
+		Addr:         "0.0.0.0:9000",
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,

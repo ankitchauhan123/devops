@@ -32,12 +32,14 @@ func (c *CurrencyService) convert(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	from := string(vars["from"])
 	to := string(vars["to"])
-	amount, _ := strconv.ParseFloat(string(vars["to"]), 64)
+	log.Println("Amount:", vars["amount"])
+	amount, _ := strconv.ParseFloat(string(vars["amount"]), 64)
 
 	exchangeRate := c.FetchExchangeRate(from, to)
 	rate := &ExchangeRateResp{
 		FromCurrencyName: from,
 		ToCurrencyName:   to,
+		Rate:             exchangeRate.Rate,
 		Amount:           amount * exchangeRate.Rate,
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -46,7 +48,8 @@ func (c *CurrencyService) convert(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *CurrencyService) FetchExchangeRate(from string, to string) *CurrencyRate {
-	url := "https://localhost:8080/exchange-rates/" + from + "/" + to
+	url := "http://localhost:9000/exchange-rates/" + from + "/to/" + to
+	log.Println("Fetching exchange rate from url", url)
 	resp, err := c.httpClient.Get(url)
 	if err != nil {
 		log.Fatal(err)
@@ -54,7 +57,7 @@ func (c *CurrencyService) FetchExchangeRate(from string, to string) *CurrencyRat
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	log.Println(body)
+	log.Println(string(body))
 
 	if err != nil {
 		panic(err.Error())
@@ -62,5 +65,7 @@ func (c *CurrencyService) FetchExchangeRate(from string, to string) *CurrencyRat
 
 	cr := &CurrencyRate{}
 	json.Unmarshal(body, cr)
+	log.Println("Data Fetched:", cr, ":", cr.Rate)
+
 	return cr
 }
