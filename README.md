@@ -7,13 +7,13 @@
 
 
 **Docker Commands:**
-1. Build Docker Image:
-docker build -t devops .
-2. Start a network
-docker network create currency-network
-3. Start redis connected to this network
-docker run --rm --net currency-network --name my_redis  -p 6379:6379 -d redis
-4. Start exchange-rates container
-docker run -it --net currency-network  -p 9001:9001  devops
+1. Build Docker Image:  
+        docker build -t devops .
+2. Start a network:  
+        docker network create currency-network
+3. Start redis connected to this network:  
+        docker run --rm --net currency-network --name my_redis  -p 6379:6379 -d redis
+4. Start exchange-rates container:  
+        docker run -it --net currency-network  -p 9001:9001  devops
 
 
