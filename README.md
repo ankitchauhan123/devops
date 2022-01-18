@@ -1,19 +1,17 @@
 # devops
 
 **Build Commands:**
+
 - go build -o ./build/currency-conversion ./currency-conversion/.
 - go build -o ./build/exchange-rates ./exchange-rates/.
 
-
-
 **Docker Commands:**
+
 1. Build Docker Image:  
-        docker build -t devops .
+    docker build -t devops .
 2. Start a network:  
-        docker network create currency-network
+    docker network create currency-network
 3. Start redis connected to this network:  
-        docker run --rm --net currency-network --name my_redis  -p 6379:6379 -d redis
+    docker run --rm --net currency-network --name my_redis -p 6379:6379 -d redis
 4. Start exchange-rates container:  
-        docker run -it --net currency-network  -p 9001:9001  devops
-
-
+    docker run -it --net currency-network --name exchange_rate -p 9001:9001 devops

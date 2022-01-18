@@ -29,6 +29,8 @@ RUN apk --no-cache add ca-certificates
 
 ENV REDIS_HOST="my_redis"
 ENV REDIS_PORT=6379
+ENV SERVICE_HOST="exchange_rate"
+ENV SERVICE_PORT="9001"
 
 
 WORKDIR /app
