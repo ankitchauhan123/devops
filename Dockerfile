@@ -1,8 +1,6 @@
 FROM golang:alpine AS builder
 
 
-ENV REDIS_HOST="my_redis"
-ENV REDIS_PORT=6379
 
 
 WORKDIR /app
@@ -16,28 +14,30 @@ COPY . .
 
 RUN go build -o ./build/ ./...
 
-EXPOSE 9000
-EXPOSE 9001
 
 
 
-CMD ["/app/build/exchange-rates"]
+
+#CMD ["/app/build/exchange-rates"]
 
 ##
 ## Deploy
 ##
-#FROM debian:buster-slim
+FROM alpine:latest  
 
-#RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-#    ca-certificates && \
-#    rm -rf /var/lib/apt/lists/*
+RUN apk --no-cache add ca-certificates
 
-#WORKDIR /app
+ENV REDIS_HOST="my_redis"
+ENV REDIS_PORT=6379
 
-#COPY --from=builder /app/build/* ./
 
-#EXPOSE 8080
+WORKDIR /app
 
-#CMD ["exchange-rates"]
+COPY --from=builder /app/build/* ./
+
+EXPOSE 9000
+EXPOSE 9001
+
+CMD ["/app/exchange-rates"]
 
 
