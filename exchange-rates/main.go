@@ -29,7 +29,7 @@ func main() {
 	flag.Parse()
 
 	srv := &http.Server{
-		Addr:         "0.0.0.0:9000",
+		Addr:         "0.0.0.0:9001",
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,

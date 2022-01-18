@@ -48,7 +48,7 @@ func (c *CurrencyService) convert(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *CurrencyService) FetchExchangeRate(from string, to string) *CurrencyRate {
-	url := "http://localhost:9000/exchange-rates/" + from + "/to/" + to
+	url := "http://localhost:9001/exchange-rates/" + from + "/to/" + to
 	log.Println("Fetching exchange rate from url", url)
 	resp, err := c.httpClient.Get(url)
 	if err != nil {
