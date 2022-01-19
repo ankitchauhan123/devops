@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  exchange-rate: 
+    build: .
+    ports:
+      - "9001:9001"
+    depends_on:
+      - redis
+    command: /app/exchange-rates
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  
+  currency-conversion: 
+    build: .
+    depends_on:
+      - exchange-rate
+    ports:
+       - "9000:9000"
+    command:  /app/currency-conversion
+    environment:
+      - SERVICE_HOST=exchange-rate
+      - SERVICE_PORT=9001
+
+
+
