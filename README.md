@@ -64,3 +64,33 @@ To verify the labels and selector is working and requests are forwarded to requi
   Here you can see the service configuration and see the endpoints it would contain ip:ports to which requests would be forwarded to
 - kubectl get pods -o wide
   This would give you the pod names with ip addresses
+
+**External Service:** When we want to expose a service to outside world then specify type as LoadBalancer and nodePort > 30k.
+
+**Namespaces:** A virtual cluster in kubernetes cluster. There are 4 namespace:
+
+1. Kube-public : publically accessible data like config map
+2. kube node lease: Holds information about heartbeat
+3. default namespace: to create resources at the beginning if you have not created any namespace
+4. kube system: system process and master processes are deployed here
+
+Command to create namespace: kubectl create namespace <namespace name >
+
+**Usecase of namespace:**
+
+- default name space would filled with all the components for a complicated application. So its better to have different name space like db name space
+- two different teams could have same deployment names and hence one can override another deployment
+- blue green deployment: When we want to have two versions of same app: production1-namespace and production2-namespace. Both deployments can use same resources(like db)
+- limit access to namespaces for different teams
+- limit resources per namespaces
+
+Each name space should have its own configname and secret. However services can be accessed from other namespaces via <namespace.service_name>
+Volume cannot be namespaced but are global . To check which resources are not namespaced : kubectl api-resources --namespaced=false
+
+**Creating components in Namespace**
+Via Command: kubectl apply -f <filename> --namespace=<namespace>
+Add namespace metadata in config files like:
+metadata:
+name: XXX
+namespace: YYY
+When you type kubectl get all it takes default name space . To get objects of another name space use kubectl get all -n <namespace>
