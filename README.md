@@ -90,7 +90,7 @@ Volume cannot be namespaced but are global . To check which resources are not na
 **Creating components in Namespace**
 Via Command: kubectl apply -f <filename> --namespace=<namespace>
 Add namespace metadata in config files like:
-metadata:
-name: XXX
-namespace: YYY
+  metadata:
+    name: XXX
+    namespace: YYY
 When you type kubectl get all it takes default name space.To get objects of another name space use kubectl get all -n <namespace>
