@@ -100,9 +100,6 @@ We can use external service to access a service in k8 cluster. This is ok for te
 A typical ingress file contains host and path rules . If path == "www.abc.com" and path =="/xyz" then redirect to backend with service name = "xxx" and port = "zzzz"
 
 Enabling ingress requires another ingress controller pod that evaluates the ingress rules(an implementation of ingress). So ingress contoller would be entrypoint of all the requests and evaluates which forwarding rules would apply. There are various ingress controller in the market.K8 has a default nginx controller.In some cloud providers, they provide the load balancer which would redirect the request to ingress controller. In bare metal case, we can have a proxy server outside our k8 cluster that can redirect the traffic to ingress controller.
-<<<<<<< HEAD
 
 TLS can be configured in ingress 
 
-=======
->>>>>>> f04e4d2 (added ingress not working)
