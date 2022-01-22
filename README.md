@@ -93,4 +93,4 @@ Add namespace metadata in config files like:
 metadata:
 name: XXX
 namespace: YYY
-When you type kubectl get all it takes default name space . To get objects of another name space use kubectl get all -n <namespace>
+When you type kubectl get all it takes default name space.To get objects of another name space use kubectl get all -n <namespace>
