@@ -88,9 +88,18 @@ Each name space should have its own configname and secret. However services can 
 Volume cannot be namespaced but are global . To check which resources are not namespaced : kubectl api-resources --namespaced=false
 
 **Creating components in Namespace**
-Via Command: kubectl apply -f <filename> --namespace=<namespace>
-Add namespace metadata in config files like:
-  metadata:
-    name: XXX
-    namespace: YYY
+Via Command: kubectl apply -f <filename> --namespace=<namespace>  
+Add namespace metadata in config files like:  
+metadata:  
+name: XXX  
+namespace: YYY  
 When you type kubectl get all it takes default name space.To get objects of another name space use kubectl get all -n <namespace>
+
+**Ingress**
+We can use external service to access a service in k8 cluster. This is ok for testing purpose. But for production , we need to have a proper domain to access the service. Here ingress comes into picture. All request comes to ingress which directs to internal service and then to pods.
+A typical ingress file contains host and path rules . If path == "www.abc.com" and path =="/xyz" then redirect to backend with service name = "xxx" and port = "zzzz"
+
+Enabling ingress requires another ingress controller pod that evaluates the ingress rules(an implementation of ingress). So ingress contoller would be entrypoint of all the requests and evaluates which forwarding rules would apply. There are various ingress controller in the market.K8 has a default nginx controller.In some cloud providers, they provide the load balancer which would redirect the request to ingress controller. In bare metal case, we can have a proxy server outside our k8 cluster that can redirect the traffic to ingress controller.
+
+TLS can be configured in ingress 
+
